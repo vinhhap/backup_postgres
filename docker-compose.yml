@@ -14,7 +14,7 @@ services:
       - B2_APP_KEY=00297d510d823294599041217c9034a34bcf8d72ca
       - B2_BUCKET=qnguyenbucket
       - B2_BACKUP_PATH=backup_meta_postgres_mbf
-      - SCHEDULE=@daily
+      - SCHEDULE="0 */3 * * *"
     volumes:
       - ./backup:/backup
     

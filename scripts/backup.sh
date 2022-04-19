@@ -63,11 +63,11 @@ if [ $POSTGRES_BACKUP_ALL = "true" ]; then
 
   echo "Uploading dump to Backblaze $B2_BUCKET"
 
-  b2 upload-file $B2_BUCKET "${BACKUP_PATH}/${BACKUP_TIME}_dump.sql.gz" "${B2_BACKUP_PATH}/all_${BACKUP_TIME}_dump.sql.gz"
+  b2 upload-file $B2_BUCKET "${BACKUP_PATH}/all_${BACKUP_TIME}_dump.sql.gz" "${B2_BACKUP_PATH}/all_${BACKUP_TIME}_dump.sql.gz"
 
   echo "SQL backup uploaded successfully"
 
-  rm -rf "${BACKUP_PATH}/${BACKUP_TIME}_dump.sql.gz"
+  rm -rf "${BACKUP_PATH}/all_${BACKUP_TIME}_dump.sql.gz"
 else
   OIFS="$IFS"
   IFS=','
@@ -77,11 +77,11 @@ else
 
     echo "Creating dump of ${DB} database from ${POSTGRES_HOST}..."
 
-    pg_dump $POSTGRES_HOST_OPTS $DB | gzip > "${BACKUP_PATH}/${DB}_${BACKUP_TIME}_dump.sql.gz"
+    pg_dump $POSTGRES_HOST_OPTS $DB | gzip > "${BACKUP_PATH}/${DB}/${DB}_${BACKUP_TIME}_dump.sql.gz"
 
     echo "Uploading dump to $S3_BUCKET"
     
-    b2 upload-file $B2_BUCKET "${BACKUP_PATH}/${DB}_${BACKUP_TIME}_dump.sql.gz" "${BACKUP_PATH}/${DB}/${DB}_${BACKUP_TIME}_dump.sql.gz"
+    b2 upload-file $B2_BUCKET "${BACKUP_PATH}/${DB}/${DB}_${BACKUP_TIME}_dump.sql.gz" "${BACKUP_PATH}/${DB}/${DB}_${BACKUP_TIME}_dump.sql.gz"
 
     echo "SQL backup uploaded successfully"
 
