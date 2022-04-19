@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  backup_postgres:
+    image: qnguyen3496/backup_postgres:latest
+    container_name: backup_postgres
+    environment:
+      - POSTGRES_BACKUP_ALL=true
+      - POSTGRES_HOST=192.168.2.108
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Admin123
+      - B2_APP_ID=ae5f6fd55996
+      - B2_APP_KEY=00297d510d823294599041217c9034a34bcf8d72ca
+      - B2_BUCKET=qnguyenbucket
+      - B2_BACKUP_PATH=backup_meta_postgres_mbf
+      - SCHEDULE=@daily
+    volumes:
+      - ./backup:/backup
+    
